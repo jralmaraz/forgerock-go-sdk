@@ -9,7 +9,7 @@ import (
 )
 
 // HostURL - Default environment URL
-const HostURL string = "https://forgerock.iam.dtt-iam.xyz"
+const HostURL string = "https://dev.example.com"
 
 // Client -
 type Client struct {
