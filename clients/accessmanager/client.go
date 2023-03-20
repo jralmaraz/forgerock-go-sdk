@@ -27,8 +27,8 @@ type AuthStruct struct {
 // AuthResponse -
 type AuthResponse struct {
 	tokenID    string `json:"tokenId"`
-	successURL string `json:"tokenId"`
-	realm      string `json:"tokenId"`
+	successURL string `json:"successUrl"`
+	realm      string `json:"realm"`
 }
 
 // NewClient -
