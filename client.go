@@ -20,15 +20,15 @@ type Client struct {
 
 // AuthStruct -
 type AuthStruct struct {
-	xopenamusername string `json:"xopenamusername"`
-	xopenampassword string `json:"xopenampassword"`
+	Username string `json:"xopenamusername"`
+	Password string `json:"xopenampassword"`
 }
 
 // AuthResponse -
 type AuthResponse struct {
-	tokenID    string `json:"tokenId"`
-	successURL string `json:"successUrl"`
-	realm      string `json:"realm"`
+	TokenID    string `json:"tokenId"`
+	SuccessURL string `json:"successUrl"`
+	Realm      string `json:"realm"`
 }
 
 // NewClient -
@@ -47,15 +47,21 @@ func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) 
 
 		// authenticate
 		req, err := http.NewRequest("POST", fmt.Sprintf("%s/am/json/realms/root/authenticate", c.HostURL), nil)
-		req.Header.Set("X-OpenAM-Username", *xopenamusername)
-		req.Header.Set("X-OpenAM-Password", *xopenampassword)
-		req.Header.Set("Content-Type", "application/json")
-		req.Header.Set("Accept-API-Version", "resource=2.0, protocol=1.0")
 		if err != nil {
 			return nil, err
 		}
 
+		// set forgerock Auth headers
+		req.Header.Set("X-OpenAM-Username", *xopenamusername)
+		req.Header.Set("X-OpenAM-Password", *xopenampassword)
+		req.Header.Set("Content-Type", "application/json")
+		req.Header.Set("Accept-API-Version", "resource=2.0, protocol=1.0")
+
 		body, err := c.DoRequest(req)
+
+		if err != nil {
+			return nil, err
+		}
 
 		// parse response body
 		ar := AuthResponse{}
@@ -64,7 +70,7 @@ func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) 
 			return nil, err
 		}
 
-		c.amadminSsotoken = ar.tokenID
+		c.amadminSsotoken = ar.TokenID
 	}
 
 	return &c, nil
