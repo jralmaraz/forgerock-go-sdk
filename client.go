@@ -1,4 +1,4 @@
-package accessmanagerclient 
+package accessmanagerclient
 
 import (
 	"encoding/json"
@@ -70,7 +70,7 @@ func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) 
 	return &c, nil
 }
 
-func (c *Client) doRequest(req *http.Request) ([]byte, error) {
+func (c *Client) DoRequest(req *http.Request) ([]byte, error) {
 	req.Header.Set("iplanetDirectoryPro", c.amadminSsotoken)
 
 	res, err := c.HTTPClient.Do(req)
