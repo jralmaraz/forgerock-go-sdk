@@ -72,6 +72,7 @@ func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) 
 
 func (c *Client) DoRequest(req *http.Request) ([]byte, error) {
 	req.Header.Set("iplanetDirectoryPro", c.amadminSsotoken)
+	req.Header.Set("Accept-API-Version", "resource=1.0, protocol=2.1")
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
