@@ -1,6 +1,7 @@
 package accessmanagerclient
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -34,7 +35,13 @@ type AuthResponse struct {
 // NewClient -
 func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) {
 	c := Client{
-		HTTPClient: &http.Client{Timeout: 10 * time.Second},
+		//TODO: this is just a hack for TLS verification only for testing. We should move to a configuration paramater for the provider
+		HTTPClient: &http.Client{Timeout: 10 * time.Second, Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: true, // test server certificate is not trusted.
+			},
+		},
+		},
 		// Default AM URL
 		HostURL: HostURL,
 	}
