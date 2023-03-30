@@ -55,7 +55,7 @@ func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) 
 			return nil, err
 		}
 
-		body, err := c.doRequest(req)
+		body, err := c.DoRequest(req)
 
 		// parse response body
 		ar := AuthResponse{}
