@@ -32,6 +32,26 @@ type AuthResponse struct {
 	Realm      string `json:"realm"`
 }
 
+// TODO: Move to its own models file
+type Realm struct {
+	ID         string   `json:"_id"`
+	Rev        string   `json:"_rev"`
+	ParentPath string   `json:"parentPath"`
+	Active     bool     `json:"active"`
+	Name       string   `json:"name"`
+	Aliases    []string `json:"aliases"`
+}
+
+// TODO: Move to its own models file
+type Response struct {
+	Result                  []Realm     `json:"result"`
+	ResultCount             int         `json:"resultCount"`
+	PagedResultsCookie      interface{} `json:"pagedResultsCookie"`
+	TotalPagedResultsPolicy string      `json:"totalPagedResultsPolicy"`
+	TotalPagedResults       int         `json:"totalPagedResults"`
+	RemainingPagedResults   int         `json:"remainingPagedResults"`
+}
+
 // NewClient -
 func NewClient(host, xopenamusername, xopenampassword *string) (*Client, error) {
 	c := Client{
